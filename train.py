@@ -117,17 +117,6 @@ class Training(object):
         return model_comp
 
 
-import os
-import psutil
-import timeit
-import gc
-
-
-def get_mem_usage():
-    process = psutil.Process(os.getpid())
-    return process.memory_info()
-
-
 if __name__ == "__main__":
     # set arguments
 
