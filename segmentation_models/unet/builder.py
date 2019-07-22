@@ -1,5 +1,5 @@
 from keras.layers import Conv2D
-from keras.layers import Activation
+from keras.layers import Activation, Dropout
 from keras.models import Model
 
 from .blocks import Transpose2D_block
@@ -41,6 +41,7 @@ def build_unet(backbone, classes, skip_connection_layers,
 
     x = Conv2D(classes, (3,3), padding='same', name='final_conv')(x)
     x = Activation(activation, name=activation)(x)
+    #x = Dropout(0.2)(x)
 
     model = Model(input, x)
 

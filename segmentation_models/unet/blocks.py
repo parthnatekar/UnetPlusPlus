@@ -2,7 +2,7 @@ from keras.layers import Conv2DTranspose
 from keras.layers import UpSampling2D
 from keras.layers import Conv2D
 from keras.layers import BatchNormalization
-from keras.layers import Activation
+from keras.layers import Activation, Dropout
 from keras.layers import Concatenate
 
 
@@ -20,6 +20,7 @@ def ConvRelu(filters, kernel_size, use_batchnorm=False, conv_name='conv', bn_nam
         if use_batchnorm:
             x = BatchNormalization(name=bn_name)(x)
         x = Activation('relu', name=relu_name)(x)
+        x = Dropout(0.05)(x)
         return x
     return layer
 
@@ -41,7 +42,7 @@ def Upsample2D_block(filters, stage, kernel_size=(3,3), upsample_rate=(2,2),
 
         x = ConvRelu(filters, kernel_size, use_batchnorm=use_batchnorm,
                      conv_name=conv_name + '2', bn_name=bn_name + '2', relu_name=relu_name + '2')(x)
-
+        #x = Dropout(0.2)(x)
         return x
     return layer
 
@@ -65,5 +66,6 @@ def Transpose2D_block(filters, stage, kernel_size=(3,3), upsample_rate=(2,2),
         x = ConvRelu(filters, kernel_size, use_batchnorm=use_batchnorm,
                      conv_name=conv_name + '2', bn_name=bn_name + '2', relu_name=relu_name + '2')(x)
 
+        #x = Dropout(0.2)(x)
         return x
     return layer
