@@ -61,7 +61,7 @@ class Training(object):
         train_generator = train_gen
         val_generator = val_gen
         checkpointer = ModelCheckpoint(
-            filepath='/home/parth/Interpretable_ML/Brain-tumor-segmentation/checkpoints/Xnet/X_net{epoch:02d}_{val_loss:.3f}.hdf5',
+            filepath='/checkpoints/Xnet/X_net{epoch:02d}_{val_loss:.3f}.hdf5',
             verbose=1, period=5)
         self.model.fit_generator(train_generator,
                                  epochs=self.nb_epoch, steps_per_epoch=100, validation_data=val_generator,
@@ -145,8 +145,8 @@ if __name__ == "__main__":
     # brain_seg.model.save('models/unet_with_res/unet_with_res.h5')
     print(brain_seg.model.summary())
 
-    train_generator = DataGenerator('/media/parth/DATA/brats_patches/_train/', batch_size=32)
-    val_generator = DataGenerator('/media/parth/DATA/brats_patches/_val/', batch_size=32, val=True)
+    train_generator = DataGenerator('/home/brats/parth/parth/_train/', batch_size=32)
+    val_generator = DataGenerator('/home/brats/parth/parth/_val/', batch_size=32, val=True)
 
     #brain_seg.model.save('/home/parth/Interpretable_ML/Brain-tumor-segmentation/checkpoints/U_densenet/U_densenet.h5')
 
