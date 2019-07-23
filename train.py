@@ -16,8 +16,9 @@ import tensorflow as tf
 from keras.backend.tensorflow_backend import set_session
 
 config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-config.gpu_options.visible_device_list = "2"
+config.gpu_options.per_process_gpu_memory_fraction = 0.4
+#config.gpu_options.allow_growth = True
+config.gpu_options.visible_device_list = "0"
 set_session(tf.Session(config=config))
 
 
@@ -53,7 +54,7 @@ class Training(object):
         else:
             unet = Dense_Unet(img_shape=(128, 128, 4))
             self.model = unet.compile_dense()
-            #self.model.load_weights('/home/parth/Interpretable_ML/Brain-tumor-segmentation/checkpoints/U_densenet/U_densenet.25_0.573.hdf5')
+            self.model.load_weights('/home/brats/parth/UnetPlusPlus/checkpoints/Xnet/X_net15_0.729.hdf5')
             print("U-net CNN compiled!")
 
     def fit_unet(self, train_gen, val_gen):
@@ -61,7 +62,7 @@ class Training(object):
         train_generator = train_gen
         val_generator = val_gen
         checkpointer = ModelCheckpoint(
-            filepath='/checkpoints/Xnet/X_net{epoch:02d}_{val_loss:.3f}.hdf5',
+            filepath='/home/brats/parth/UnetPlusPlus/checkpoints/Xnet/X_net{epoch:02d}_{val_loss:.3f}.hdf5',
             verbose=1, period=5)
         self.model.fit_generator(train_generator,
                                  epochs=self.nb_epoch, steps_per_epoch=100, validation_data=val_generator,

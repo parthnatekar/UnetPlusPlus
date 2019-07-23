@@ -1,4 +1,4 @@
-from segmentation_models import Unet, Nestnet, Xnet
+from segmentation_models import Unet, Nestnet, Xnet, PSPNet
 from losses import *
 from keras.optimizers import SGD, Adam
 
@@ -10,7 +10,7 @@ class Dense_Unet():
 
     def compile_dense(self):
 
-        self.model = Unet(backbone_name='densenet121',
+        self.model = Unet(backbone_name='inceptionv3',
                  input_shape=self.img_shape,
                  input_tensor=None,
                  encoder_weights=None,
@@ -24,7 +24,7 @@ class Dense_Unet():
                  classes=4,
                  activation='softmax')
 
-        sgd = SGD(lr=0.01, momentum=0.9, decay=5e-6, nesterov=False)
+        sgd = SGD(lr=0.1, momentum=0.9, decay=5e-6, nesterov=False)
         adam = Adam(lr=0.01, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
 
         self.model.compile(adam, gen_dice_loss, [dice_whole_metric,dice_core_metric,dice_en_metric])
